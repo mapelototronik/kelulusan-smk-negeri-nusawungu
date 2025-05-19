@@ -2,35 +2,72 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>PENGUMUMAN KELULUSAN</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Pengumuman Kelulusan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    #hasil {
+      margin-top: 20px;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .link-unduh {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Pengumuman Kelulusan SMK NEGERI NUSAWUNGU</h1>
-  <p>Masukkan NISN Anda:</p>
+
+  <h1>Pengumuman Kelulusan SMAN 1 Tahun 2025</h1>
+  <p>Masukkan NISN Anda untuk melihat status kelulusan.</p>
+
   <input type="text" id="nisnInput" placeholder="Contoh: 1234567890">
-  <button onclick="cekKelulusan()">Cek</button>
+  <button onclick="cekKelulusan()">Cek Kelulusan</button>
 
   <div id="hasil"></div>
 
   <script>
     async function cekKelulusan() {
-      const nisn = document.getElementById('nisnInput').value;
-      const response = await fetch('data/kelulusan.json');
-      const data = await response.json();
+      const nisn = document.getElementById('nisnInput').value.trim();
+      const hasilDiv = document.getElementById('hasil');
 
-      const siswa = data.find(item => item.nisn === nisn);
+      if (!nisn) {
+        hasilDiv.innerHTML = "<p style='color:red;'>Harap masukkan NISN.</p>";
+        return;
+      }
 
-      if (siswa) {
-        document.getElementById('hasil').innerHTML = `
-          <h2>Status: ${siswa.status}</h2>
-          <p>Nama: ${siswa.nama}</p>
-          ${siswa.link ? `<a href="${siswa.link}" target="_blank">Download Surat Kelulusan</a>` : ''}
-        `;
-      } else {
-        document.getElementById('hasil').innerHTML = `<p style="color:red;">NISN tidak ditemukan.</p>`;
+      try {
+        const response = await fetch('kelulusan.json');
+        const data = await response.json();
+
+        const siswa = data.find(item => item.nisn === nisn);
+
+        if (siswa) {
+          let html = `<p class="status">Status: ${siswa.status}</p>
+                      <p>Nama: ${siswa.nama}</p>`;
+          if (siswa.link) {
+            html += `<div class="link-unduh">
+                      <a href="${siswa.link}" target="_blank">🔗 Unduh Surat Kelulusan (PDF)</a>
+                    </div>`;
+          }
+          hasilDiv.innerHTML = html;
+        } else {
+          hasilDiv.innerHTML = "<p style='color:red;'>NISN tidak ditemukan.</p>";
+        }
+      } catch (error) {
+        hasilDiv.innerHTML = "<p style='color:red;'>Gagal memuat data kelulusan.</p>";
       }
     }
   </script>
+
 </body>
 </html>
