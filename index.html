@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pengumuman Kelulusan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Pengumuman Kelulusan SMK NEGERI NUSAWUNGU</h1>
+  <p>Masukkan NISN Anda:</p>
+  <input type="text" id="nisnInput" placeholder="Contoh: 1234567890">
+  <button onclick="cekKelulusan()">Cek</button>
 
+  <div id="hasil"></div>
+
+  <script>
+    async function cekKelulusan() {
+      const nisn = document.getElementById('nisnInput').value;
+      const response = await fetch('data/kelulusan.json');
+      const data = await response.json();
+
+      const siswa = data.find(item => item.nisn === nisn);
+
+      if (siswa) {
+        document.getElementById('hasil').innerHTML = `
+          <h2>Status: ${siswa.status}</h2>
+          <p>Nama: ${siswa.nama}</p>
+          ${siswa.link ? `<a href="${siswa.link}" target="_blank">Download Surat Kelulusan</a>` : ''}
+        `;
+      } else {
+        document.getElementById('hasil').innerHTML = `<p style="color:red;">NISN tidak ditemukan.</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
