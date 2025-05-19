@@ -1,0 +1,14 @@
+[
+  {
+    "nisn": "1234567890",
+    "nama": "Budi Santoso",
+    "status": "LULUS",
+    "link": "https://drive.google.com/yourfile.pdf"
+  },
+  {
+    "nisn": "0987654321",
+    "nama": "Siti Aminah",
+    "status": "TIDAK LULUS",
+    "link": ""
+  }
+]
