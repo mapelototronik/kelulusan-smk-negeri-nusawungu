@@ -1,14 +1,14 @@
 [
   {
-    "nisn": "1122334455",
-    "nama": "Budi Santoso",
+    "nisn": "1234567890",
+    "nama": "Andi Setiawan",
     "status": "LULUS",
-    "link": "https://drive.google.com/file/d/1T11ep6itbDZv7D-X8doxF__RoO75kO2a/view?usp=drivesdk"
+    "pdf": "pdf/1234567890.pdf"
   },
   {
     "nisn": "0987654321",
-    "nama": "Siti Aminah",
+    "nama": "Budi Hartono",
     "status": "TIDAK LULUS",
-    "link": ""
+    "pdf": "pdf/0987654321.pdf"
   }
 ]
